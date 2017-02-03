@@ -182,16 +182,12 @@ class StageTwo(InterconnectVersion):
 # # # #
 
 
-class TdeDev(InterconnectVersion):
+class Tde(InterconnectVersion):
 
     def __init__(self, master=None, cnf={}, **kw):
         InterconnectVersion.__init__(self, master, cnf, **kw)
 
-        self.bokrug_root = r"\\bokrug\Builds\TDE-IC"
-        self.msi = "Dev"
-        self.interconnects = ["ce-dev-tde"]
-
-        self._init_gui_("TDE Dev")
+        self.bokrug_root = r"\\epic-nfs\nfs_ask\interconnect\Builds\TDE-IC"
 
     def _fill_codebase_(self):
         for f in os.listdir(self.bokrug_root):
@@ -201,20 +197,27 @@ class TdeDev(InterconnectVersion):
 # # # #
 
 
-class TdeQa(InterconnectVersion):
+class TdeDev(Tde):
 
     def __init__(self, master=None, cnf={}, **kw):
-        InterconnectVersion.__init__(self, master, cnf, **kw)
+        Tde.__init__(self, master, cnf, **kw)
 
-        self.bokrug_root = r"\\bokrug\Builds\TDE-IC"
+        self.msi = "Dev"
+        self.interconnects = ["ce-dev-tde"]
+
+        self._init_gui_("TDE Dev")
+
+# # # #
+
+
+class TdeQa(Tde):
+
+    def __init__(self, master=None, cnf={}, **kw):
+        Tde.__init__(self, master, cnf, **kw)
+
         self.msi = "QA"
         self.interconnects = ["ce-qa-tde"]
 
         self._init_gui_("TDE QA")
-
-    def _fill_codebase_(self):
-        for f in os.listdir(self.bokrug_root):
-            if f.upper().endswith("%s" % self.msi.upper()):
-                self.codebase.insert(END, f)
 
 # # # #
